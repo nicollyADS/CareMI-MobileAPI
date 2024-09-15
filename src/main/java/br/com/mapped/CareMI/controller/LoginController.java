@@ -7,6 +7,7 @@ import br.com.mapped.CareMI.repository.LoginRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +37,9 @@ public class LoginController {
     }
 
     //POST
-    @PostMapping
+    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @Transactional
-    public ResponseEntity<DetalhesLoginDto> post(@RequestBody @Valid CadastroLoginDto loginDto,
+    public ResponseEntity<DetalhesLoginDto> post(@ModelAttribute @Valid CadastroLoginDto loginDto,
                                                  UriComponentsBuilder uriBuilder){
         var login = new Login(loginDto);
         loginRepository.save(login);
